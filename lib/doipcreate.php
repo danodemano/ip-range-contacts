@@ -21,6 +21,32 @@ if(get_magic_quotes_gpc()) {
 	$company 	= $_POST['company'];
 } //end if(get_magic_quotes_gpc()) {
 
+//Check for valid CIDR
+if ((!is_numeric($cidr)) AND ($cidr<=64)) {
+	//Invalid CIDR, redirect back to the create page
+	//Make sure we save all the data into the session
+	$_SESSION['ipaddress'] 	= $ipaddress;
+	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['company'] 	= $company;
+	
+	//Something is not right, redirect back to the create page
+	header('Location: ../ipcreate.php?op=invalidcidr');
+	exit;
+} //end if ((!is_numeric($cidr)) AND ($cidr<=64)) {
+
+//Make sure company is not null
+if ($company == '') {
+	//Invalid company, redirect back to the create page
+	//Make sure we save all the data into the session
+	$_SESSION['ipaddress'] 	= $ipaddress;
+	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['company'] 	= $company;
+	
+	//Something is not right, redirect back to the create page
+	header('Location: ../ipcreate.php?op=invalidcompany');
+	exit;
+} //end if ($company == '') {
+
 //Let's validate the IP address
 $validipv4 = filter_var($ipaddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 $validipv6 = filter_var($ipaddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
