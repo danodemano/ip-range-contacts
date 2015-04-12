@@ -22,7 +22,7 @@ if(get_magic_quotes_gpc()) {
 } //end if(get_magic_quotes_gpc()) {
 
 //Check for valid CIDR
-if ((!is_numeric($cidr)) AND ($cidr<=64)) {
+if ((!is_null($cidr)) AND (!is_numeric($cidr)) AND (($cidr>64) OR ($cidr<0))) {
 	//Invalid CIDR, redirect back to the create page
 	//Make sure we save all the data into the session
 	$_SESSION['ipaddress'] 	= $ipaddress;
@@ -30,12 +30,13 @@ if ((!is_numeric($cidr)) AND ($cidr<=64)) {
 	$_SESSION['company'] 	= $company;
 	
 	//Something is not right, redirect back to the create page
+	require_once('lib/dbclose.php');
 	header('Location: ../ipcreate.php?op=invalidcidr');
 	exit;
-} //end if ((!is_numeric($cidr)) AND ($cidr<=64)) {
+} //end if ((!is_null($cidr)) AND (!is_numeric($cidr)) AND (($cidr>64) OR ($cidr<0))) {
 
 //Make sure company is not null
-if ($company == '') {
+if (is_null($company)) {
 	//Invalid company, redirect back to the create page
 	//Make sure we save all the data into the session
 	$_SESSION['ipaddress'] 	= $ipaddress;
@@ -43,6 +44,7 @@ if ($company == '') {
 	$_SESSION['company'] 	= $company;
 	
 	//Something is not right, redirect back to the create page
+	require_once('lib/dbclose.php');
 	header('Location: ../ipcreate.php?op=invalidcompany');
 	exit;
 } //end if ($company == '') {
@@ -62,6 +64,7 @@ if ($validipv4) {
 	$_SESSION['company'] 	= $company;
 	
 	//Something is not right, redirect back to the create page
+	require_once('lib/dbclose.php');
 	header('Location: ../ipcreate.php?op=invalidip');
 	exit;
 } //end if ($validipv4) {
