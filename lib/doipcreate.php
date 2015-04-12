@@ -74,9 +74,12 @@ if ($validipv4) {
 	$cidr	  = mysqli_real_escape_string($conn, $cidr);
 	$company  = mysqli_real_escape_string($conn, $company);
 
-	//SQL query that will insert the required data into the database
+	//Insert the IP information into the database
 	$sql = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES ('$firstint', '$lastint', '$cidr', '$company', '4');";
-	die ($sql);
+	mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
+
+	//We are done with the database connection at this point
+	require_once('lib/dbclose.php');
 } else if ($validipv6) {
 	//Valid IPv6 - proceed!
 
@@ -99,9 +102,12 @@ if ($validipv4) {
 	$cidr	  = mysqli_real_escape_string($conn, $cidr);
 	$company  = mysqli_real_escape_string($conn, $company);
 
-	//SQL query that will insert the required data into the database
+	//Insert the IP information into the database
 	$sql = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES ('$firstint', '$lastint', '$cidr', '$company', '6');";
-	die ($sql);
+	mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
+
+	//We are done with the database connection at this point
+	require_once('lib/dbclose.php');
 } else {
 	//Not a valid IP address, redirect back with an error
 	//Make sure we save all the data into the session
