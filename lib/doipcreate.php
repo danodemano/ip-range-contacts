@@ -22,7 +22,7 @@ if(get_magic_quotes_gpc()) {
 } //end if(get_magic_quotes_gpc()) {
 
 //Check for valid CIDR
-if ((is_null($cidr)) OR (!is_numeric($cidr)) OR (($cidr>64) OR ($cidr<0))) {
+if ((empty($cidr)) OR (!is_numeric($cidr)) OR (($cidr>64) OR ($cidr<0))) {
 	//Invalid CIDR, redirect back to the create page
 	//Make sure we save all the data into the session
 	$_SESSION['ipaddress'] 	= $ipaddress;
@@ -30,13 +30,13 @@ if ((is_null($cidr)) OR (!is_numeric($cidr)) OR (($cidr>64) OR ($cidr<0))) {
 	$_SESSION['company'] 	= $company;
 	
 	//Something is not right, redirect back to the create page
-	require_once('lib/dbclose.php');
+	require_once('dbclose.php');
 	header('Location: ../ipcreate.php?op=invalidcidr');
 	exit;
-} //end if ((is_null($cidr)) OR (!is_numeric($cidr)) OR (($cidr>64) OR ($cidr<0))) {
+} //end if ((empty($cidr)) OR (!is_numeric($cidr)) OR (($cidr>64) OR ($cidr<0))) {
 
-//Make sure company is not null
-if (is_null($company)) {
+//Make sure company is not empty
+if (empty($company)) {
 	//Invalid company, redirect back to the create page
 	//Make sure we save all the data into the session
 	$_SESSION['ipaddress'] 	= $ipaddress;
@@ -44,10 +44,10 @@ if (is_null($company)) {
 	$_SESSION['company'] 	= $company;
 	
 	//Something is not right, redirect back to the create page
-	require_once('lib/dbclose.php');
+	require_once('dbclose.php');
 	header('Location: ../ipcreate.php?op=invalidcompany');
 	exit;
-} //end if ($company == '') {
+} //end if (empty($company)) {
 
 //Let's validate the IP address
 $validipv4 = filter_var($ipaddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
@@ -79,7 +79,7 @@ if ($validipv4) {
 	mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
 
 	//We are done with the database connection at this point
-	require_once('lib/dbclose.php');
+	require_once('dbclose.php');
 } else if ($validipv6) {
 	//Valid IPv6 - proceed!
 
@@ -107,7 +107,7 @@ if ($validipv4) {
 	mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
 
 	//We are done with the database connection at this point
-	require_once('lib/dbclose.php');
+	require_once('dbclose.php');
 } else {
 	//Not a valid IP address, redirect back with an error
 	//Make sure we save all the data into the session
@@ -116,7 +116,7 @@ if ($validipv4) {
 	$_SESSION['company'] 	= $company;
 	
 	//Something is not right, redirect back to the create page
-	require_once('lib/dbclose.php');
+	require_once('dbclose.php');
 	header('Location: ../ipcreate.php?op=invalidip');
 	exit;
 } //end if ($validipv4) {
