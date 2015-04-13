@@ -15,16 +15,13 @@ if ($op=='') {
 	$company 	= $_SESSION['company'];
 } //if ($op<>'') {
 
-//Get the configs and connect to the database
-//require_once('lib/dbconfig.php');
-//require_once('lib/dbconnect.php');
 ?>
 <html>
 <head>
 <title>IP Address Contacts - Create Network</title>
 </head>
 <body>
-
+<h2>Use this form to enter in a new IP range and company</h2>
 <form method="post" action='lib/doipcreate.php'>
 	<table>
 		<tr>
@@ -45,7 +42,7 @@ if ($op=='') {
 		</tr>
 	</table>
 </form>
-<?
-//Close the database connection
-//require_once('lib/dbclose.php');
-?>
+<br>
+<br>
+<br>
+<a href="index.php">Return to the main page</a>
