@@ -54,10 +54,11 @@ $validipv6 = filter_var($ipaddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 if ($validipv4) {
 	//Valid IPv4 - proceed!
 	
-	//Create the new block and get the first and last IP addresses
+	//Create the new block and get the first IP, last IP, and number of addresses
 	$block = new IPv4Block($ipaddress, $cidr);
 	$first = $block->getFirstIp();
 	$last  = $block->getLastIp();
+	$total = $block->getNbAddresses();
 
 	//Convert the first IP to integer
 	$firstip  = new IPv4((string)$first);
@@ -81,8 +82,9 @@ if ($validipv4) {
 	require_once('dbclose.php');
 
 	//Stash all the session data and redirect to the done page
-	$_SESSION['network'] 	= $first;
-	$_SESSION['broadcast']	= $last;
+	$_SESSION['network'] 	= (string)$first;
+	$_SESSION['broadcast']	= (string)$last;
+	$_SESSION['total']	= (string)$total;
 	$_SESSION['cidr'] 	= $cidr;
 	$_SESSION['company'] 	= $company;
 
@@ -92,10 +94,11 @@ if ($validipv4) {
 } else if ($validipv6) {
 	//Valid IPv6 - proceed!
 
-	//Create the new block and get the first and last IP addresses
+	//Create the new block and get the first IP, last IP, and number of addresses
 	$block = new IPv6Block($ipaddress, $cidr);
 	$first = $block->getFirstIp();
 	$last  = $block->getLastIp();
+	$total = $block->getNbAddresses();
 
 	//Convert the first IP to integer
 	$firstip  = new IPv6((string)$first);
@@ -119,8 +122,9 @@ if ($validipv4) {
 	require_once('dbclose.php');
 
 	//Stash all the session data and redirect to the done page
-	$_SESSION['network'] 	= $first;
-	$_SESSION['broadcast']	= $last;
+	$_SESSION['network'] 	= (string)$first;
+	$_SESSION['broadcast']	= (string)$last;
+	$_SESSION['total']	= (string)$total;
 	$_SESSION['cidr'] 	= $cidr;
 	$_SESSION['company'] 	= $company;
 
