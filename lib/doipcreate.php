@@ -1,5 +1,4 @@
 <?php
-
 //Start the sessions for preserving the data
 session_start();
 
@@ -80,6 +79,16 @@ if ($validipv4) {
 
 	//We are done with the database connection at this point
 	require_once('dbclose.php');
+
+	//Stash all the session data and redirect to the done page
+	$_SESSION['network'] 	= $first;
+	$_SESSION['broadcast']	= $last;
+	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['company'] 	= $company;
+
+	//redirect to done
+	header('Location: ../done.php?op=ipadded');
+	exit;
 } else if ($validipv6) {
 	//Valid IPv6 - proceed!
 
@@ -108,6 +117,16 @@ if ($validipv4) {
 
 	//We are done with the database connection at this point
 	require_once('dbclose.php');
+
+	//Stash all the session data and redirect to the done page
+	$_SESSION['network'] 	= $first;
+	$_SESSION['broadcast']	= $last;
+	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['company'] 	= $company;
+
+	//redirect to done
+	header('Location: ../done.php?op=ipadded');
+	exit;
 } else {
 	//Not a valid IP address, redirect back with an error
 	//Make sure we save all the data into the session
