@@ -1,2 +1,2 @@
 # ip-range-contacts
-For keeping track of abuse contacts for IP ranges within an organization.
+For keeping track of contacts for IP ranges within an organization.
