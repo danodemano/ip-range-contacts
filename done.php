@@ -9,8 +9,13 @@ session_start();
 //Kill the session, print and error and die
 if ($op=='') {
 	session_destroy();
-	die('This page is not meant to be accessed directly.  Please <a href="index.php">click here</a> to return home');
+	die('This page is not meant to be accessed directly.  Please <a href="index.php">click here</a> to return home.');
 }else if ($op='ipadded') {
+	//Make sure this page wasn't refreshed
+	if (empty($_SESSION['network'])) {
+		die("Don't do that.  ".'Please <a href="index.php">click here</a> to return home.');
+	} //end if (empty($_SESSION['network'])) {
+
 	//Get the session data
 	$network	= $_SESSION['network'];
 	$broadcast	= $_SESSION['broadcast'];
