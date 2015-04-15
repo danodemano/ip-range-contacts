@@ -40,6 +40,7 @@ CIDR: <b><?php echo $cidr; ?></b><br>
 Company: <b><?php echo $company; ?></b><br>
 <br>
 <br>
+<br>
 Please <a href="index.php">click here</a> to return to the home page.
 <?php
 } //if ($op<>'') {
