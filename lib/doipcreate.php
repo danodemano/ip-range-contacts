@@ -74,6 +74,21 @@ if ($validipv4) {
 	$cidr	  = mysqli_real_escape_string($conn, $cidr);
 	$company  = mysqli_real_escape_string($conn, $company);
 
+	//Check for a duplicate address
+	$sql = "SELECT `id` FROM `ip_ranges` WHERE '$firstint'>=`start` AND '$lastint'<=`end`;";
+	$result = mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
+	if (mysqli_num_rows($result)>0) {
+		//We have a duplicate, redirect back with an error
+		//Make sure we save all the data into the session
+		$_SESSION['ipaddress'] 	= $ipaddress;
+		$_SESSION['cidr'] 	= $cidr;
+		$_SESSION['company'] 	= $company;
+	
+		//Something is not right, redirect back to the create page
+		require_once('dbclose.php');
+		header('Location: ../ipcreate.php?op=dupeip');
+	} //end if (mysqli_num_rows($result)>0) {
+
 	//Insert the IP information into the database
 	$sql = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES ('$firstint', '$lastint', '$cidr', '$company', '4');";
 	mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
@@ -113,6 +128,22 @@ if ($validipv4) {
 	$lastint  = mysqli_real_escape_string($conn, $lastint);
 	$cidr	  = mysqli_real_escape_string($conn, $cidr);
 	$company  = mysqli_real_escape_string($conn, $company);
+
+	//Check for a duplicate address
+	$sql = "SELECT `id` FROM `ip_ranges` WHERE '$firstint'>=`start` AND '$lastint'<=`end`;";
+	$result = mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
+	if (mysqli_num_rows($result)>0) {
+		//We have a duplicate, redirect back with an error
+		//Make sure we save all the data into the session
+		$_SESSION['ipaddress'] 	= $ipaddress;
+		$_SESSION['cidr'] 	= $cidr;
+		$_SESSION['company'] 	= $company;
+	
+		//Something is not right, redirect back to the create page
+		require_once('dbclose.php');
+		header('Location: ../ipcreate.php?op=dupeip');
+	} //end if (mysqli_num_rows($result)>0) {
+		
 
 	//Insert the IP information into the database
 	$sql = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES ('$firstint', '$lastint', '$cidr', '$company', '6');";
