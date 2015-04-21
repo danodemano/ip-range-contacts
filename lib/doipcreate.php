@@ -68,16 +68,11 @@ if ($validipv4) {
 	$lastip  = new IPv4((string)$last);
 	$lastint = $lastip->numeric();
 
-	//SANATIZE ALL THE THINGS!!
-	$firstint = mysqli_real_escape_string($conn, $firstint);
-	$lastint  = mysqli_real_escape_string($conn, $lastint);
-	$cidr	  = mysqli_real_escape_string($conn, $cidr);
-	$company  = mysqli_real_escape_string($conn, $company);
-
 	//Check for a duplicate address
-	$sql = "SELECT `id` FROM `ip_ranges` WHERE '$firstint'>=`start` AND '$lastint'<=`end`;";
-	$result = mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
-	if (mysqli_num_rows($result)>0) {
+	$query = "SELECT `id` FROM `ip_ranges` WHERE " . $db->quote($firstint) . ">=`start` AND " . $db->quote($lastint) . "<=`end`;";
+	$res = $db->query($query);
+	$num_rows = $res->fetchColumn();
+	if ($num_rows>0) {
 		//We have a duplicate, redirect back with an error
 		//Make sure we save all the data into the session
 		$_SESSION['ipaddress'] 	= $ipaddress;
@@ -87,11 +82,15 @@ if ($validipv4) {
 		//Something is not right, redirect back to the create page
 		require_once('dbclose.php');
 		header('Location: ../ipcreate.php?op=dupeip');
-	} //end if (mysqli_num_rows($result)>0) {
+	} //end if ($num_rows>0) {
+
+	//Release the result resources back to the system
+	$res->closeCursor();
 
 	//Insert the IP information into the database
-	$sql = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES ('$firstint', '$lastint', '$cidr', '$company', '4');";
-	mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
+	$query = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES (" . $db->quote($firstint) . ", " . $db->quote($lastint) . ", " . $db->quote($cidr) . ", " . $db->quote($company) . ", '4');";
+	$res = $db->query($query);
+	$res->closeCursor();
 
 	//We are done with the database connection at this point
 	require_once('dbclose.php');
@@ -123,16 +122,11 @@ if ($validipv4) {
 	$lastip  = new IPv6((string)$last);
 	$lastint = $lastip->numeric();
 
-	//SANATIZE ALL THE THINGS!!
-	$firstint = mysqli_real_escape_string($conn, $firstint);
-	$lastint  = mysqli_real_escape_string($conn, $lastint);
-	$cidr	  = mysqli_real_escape_string($conn, $cidr);
-	$company  = mysqli_real_escape_string($conn, $company);
-
 	//Check for a duplicate address
-	$sql = "SELECT `id` FROM `ip_ranges` WHERE '$firstint'>=`start` AND '$lastint'<=`end`;";
-	$result = mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
-	if (mysqli_num_rows($result)>0) {
+	$query = "SELECT `id` FROM `ip_ranges` WHERE " . $db->quote($firstint) . ">=`start` AND " . $db->quote($lastint) . "<=`end`;";
+	$res = $db->query($query);
+	$num_rows = $res->fetchColumn();
+	if ($num_rows>0) {
 		//We have a duplicate, redirect back with an error
 		//Make sure we save all the data into the session
 		$_SESSION['ipaddress'] 	= $ipaddress;
@@ -142,12 +136,15 @@ if ($validipv4) {
 		//Something is not right, redirect back to the create page
 		require_once('dbclose.php');
 		header('Location: ../ipcreate.php?op=dupeip');
-	} //end if (mysqli_num_rows($result)>0) {
-		
+	} //end if ($num_rows>0) {
+
+	//Release the result resources back to the system
+	$res->closeCursor();
 
 	//Insert the IP information into the database
-	$sql = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES ('$firstint', '$lastint', '$cidr', '$company', '6');";
-	mysqli_query($conn, $sql) or die('Error, query failed. ' . mysqli_error($conn) . "<br>Line: ".__LINE__ ."<br>File: ".__FILE__);
+	$query = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES (" . $db->quote($firstint) . ", " . $db->quote($lastint) . ", " . $db->quote($cidr) . ", " . $db->quote($company) . ", '6');";
+	$res = $db->query($query);
+	$res->closeCursor();
 
 	//We are done with the database connection at this point
 	require_once('dbclose.php');
