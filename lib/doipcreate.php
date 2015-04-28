@@ -14,10 +14,14 @@ if(get_magic_quotes_gpc()) {
 	$ipaddress	= stripslashes($_POST['ip']);
 	$cidr 		= stripslashes($_POST['cidr']);
 	$company 	= stripslashes($_POST['company']);
+	$notes	 	= stripslashes($_POST['notes']);
+	$provider 	= stripslashes($_POST['provider']);
 } else {
 	$ipaddress	= $_POST['ip'];
 	$cidr 		= $_POST['cidr'];
 	$company 	= $_POST['company'];
+	$notes	 	= $_POST['notes'];
+	$provider 	= $_POST['provider'];
 } //end if(get_magic_quotes_gpc()) {
 
 //Check for valid CIDR
@@ -25,8 +29,10 @@ if ((empty($cidr)) OR (!is_numeric($cidr)) OR (($cidr>64) OR ($cidr<0))) {
 	//Invalid CIDR, redirect back to the create page
 	//Make sure we save all the data into the session
 	$_SESSION['ipaddress'] 	= $ipaddress;
-	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['cidr'] 		= $cidr;
 	$_SESSION['company'] 	= $company;
+	$_SESSION['notes'] 		= $notes;
+	$_SESSION['provider'] 	= $provider;
 	
 	//Something is not right, redirect back to the create page
 	require_once('dbclose.php');
@@ -39,8 +45,10 @@ if (empty($company)) {
 	//Invalid company, redirect back to the create page
 	//Make sure we save all the data into the session
 	$_SESSION['ipaddress'] 	= $ipaddress;
-	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['cidr'] 		= $cidr;
 	$_SESSION['company'] 	= $company;
+	$_SESSION['notes'] 		= $notes;
+	$_SESSION['provider'] 	= $provider;
 	
 	//Something is not right, redirect back to the create page
 	require_once('dbclose.php');
@@ -76,8 +84,10 @@ if ($validipv4) {
 		//We have a duplicate, redirect back with an error
 		//Make sure we save all the data into the session
 		$_SESSION['ipaddress'] 	= $ipaddress;
-		$_SESSION['cidr'] 	= $cidr;
+		$_SESSION['cidr'] 		= $cidr;
 		$_SESSION['company'] 	= $company;
+		$_SESSION['notes'] 		= $notes;
+		$_SESSION['provider'] 	= $provider;
 	
 		//Something is not right, redirect back to the create page
 		require_once('dbclose.php');
@@ -88,7 +98,9 @@ if ($validipv4) {
 	$res->closeCursor();
 
 	//Insert the IP information into the database
-	$query = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES (" . $db->quote($firstint) . ", " . $db->quote($lastint) . ", " . $db->quote($cidr) . ", " . $db->quote($company) . ", '4');";
+	$query = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`, `notes`, `provider`) VALUES (" . 
+			 $db->quote($firstint) . ", " . $db->quote($lastint) . ", " . $db->quote($cidr) . ", " . $db->quote($company) . 
+			 ", '4', " . $db->quote($notes) . ", " . $db->quote($provider) . ");";
 	$res = $db->query($query);
 	$res->closeCursor();
 
@@ -98,9 +110,11 @@ if ($validipv4) {
 	//Stash all the session data and redirect to the done page
 	$_SESSION['network'] 	= (string)$first;
 	$_SESSION['broadcast']	= (string)$last;
-	$_SESSION['total']	= (string)$total;
-	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['total']		= (string)$total;
+	$_SESSION['cidr'] 		= $cidr;
 	$_SESSION['company'] 	= $company;
+	$_SESSION['notes'] 		= $notes;
+	$_SESSION['provider'] 	= $provider;
 
 	//redirect to done
 	header('Location: ../done.php?op=ipadded');
@@ -130,8 +144,10 @@ if ($validipv4) {
 		//We have a duplicate, redirect back with an error
 		//Make sure we save all the data into the session
 		$_SESSION['ipaddress'] 	= $ipaddress;
-		$_SESSION['cidr'] 	= $cidr;
+		$_SESSION['cidr'] 		= $cidr;
 		$_SESSION['company'] 	= $company;
+		$_SESSION['notes'] 		= $notes;
+		$_SESSION['provider'] 	= $provider;
 	
 		//Something is not right, redirect back to the create page
 		require_once('dbclose.php');
@@ -142,7 +158,9 @@ if ($validipv4) {
 	$res->closeCursor();
 
 	//Insert the IP information into the database
-	$query = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`) VALUES (" . $db->quote($firstint) . ", " . $db->quote($lastint) . ", " . $db->quote($cidr) . ", " . $db->quote($company) . ", '6');";
+	$query = "INSERT INTO `ip_ranges` (`start`, `end`, `cidr`, `company`, `ipv`, `notes`, `provider`) VALUES (" . 
+		 $db->quote($firstint) . ", " . $db->quote($lastint) . ", " . $db->quote($cidr) . ", " . $db->quote($company) . 
+		 ", '6', " . $db->quote($notes) . ", " . $db->quote($provider) . ");";
 	$res = $db->query($query);
 	$res->closeCursor();
 
@@ -152,9 +170,11 @@ if ($validipv4) {
 	//Stash all the session data and redirect to the done page
 	$_SESSION['network'] 	= (string)$first;
 	$_SESSION['broadcast']	= (string)$last;
-	$_SESSION['total']	= (string)$total;
-	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['total']		= (string)$total;
+	$_SESSION['cidr'] 		= $cidr;
 	$_SESSION['company'] 	= $company;
+	$_SESSION['notes'] 		= $notes;
+	$_SESSION['provider'] 	= $provider;
 
 	//redirect to done
 	header('Location: ../done.php?op=ipadded');
@@ -163,8 +183,10 @@ if ($validipv4) {
 	//Not a valid IP address, redirect back with an error
 	//Make sure we save all the data into the session
 	$_SESSION['ipaddress'] 	= $ipaddress;
-	$_SESSION['cidr'] 	= $cidr;
+	$_SESSION['cidr'] 		= $cidr;
 	$_SESSION['company'] 	= $company;
+	$_SESSION['notes'] 		= $notes;
+	$_SESSION['provider'] 	= $provider;
 	
 	//Something is not right, redirect back to the create page
 	require_once('dbclose.php');
