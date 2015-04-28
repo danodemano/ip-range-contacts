@@ -44,17 +44,32 @@ function all_blocks ($db) {
 //This function gets the info for one block
 function block_info($id, $db){
   //Search for the block by ID passed to this function
-  $query = "SELECT `id`, `start`, `end`, `cidr`, `ipv`, `company` FROM `ip_ranges` WHERE `id` = ". $db->quote($id) .";";
+  $query = "SELECT `id`, `start`, `end`, `cidr`, `ipv`, `company` FROM `ip_ranges` WHERE `id` = ". $db->quote($id) ." LIMIT 1;";
   //die ($query);
   $res = $db->query($query);
   //There should only be one record, retrieve it
   foreach ($res as $records) {
-    $return_val = "<b>ID:</b>&nbsp;" . $records['id']  . "<br>\r\n".
-                  "<b>Network:</b>&nbsp;" . $records['start']  . "<br>\r\n".
-                  "<b>Broadcast:</b>&nbsp;" . $records['end']  . "<br>\r\n".
-                  "<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
-                  "<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
-                  "<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n";
+    if ($records["ipv"] == '4') {
+      //Convert the network and broadcast back to human formats
+      $network = new IPv4($records["start"]);
+      $broadcast = new IPv4($records["end"]);
+      $return_val = "<b>ID:</b>&nbsp;" . $records['id']  . "<br>\r\n".
+                    "<b>Network:</b>&nbsp;" . $network  . "<br>\r\n".
+                    "<b>Broadcast:</b>&nbsp;" . $broadcast  . "<br>\r\n".
+                    "<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
+                    "<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
+                    "<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n";
+    }else if ($records["ipv"] == '6') {
+      //Convert the network and broadcast back to human formats
+      $network = new IPv6($records["start"]);
+      $broadcast = new IPv6($records["end"]);
+      $return_val = "<b>ID:</b>&nbsp;" . $records['id']  . "<br>\r\n".
+                    "<b>Network:</b>&nbsp;" . $network  . "<br>\r\n".
+                    "<b>Broadcast:</b>&nbsp;" . $broadcast  . "<br>\r\n".
+                    "<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
+                    "<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
+                    "<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n";
+    } //end if ($records["ipv"] == '4') {
   } //end foreach ($res as $records) {
   return $return_val;
 }
