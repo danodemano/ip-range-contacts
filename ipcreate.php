@@ -46,3 +46,5 @@ if ($op=='') {
 <br>
 <br>
 <a href="index.php">Return to the main page</a>
+</body>
+</html>
