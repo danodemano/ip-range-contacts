@@ -13,6 +13,8 @@ if ($op=='') {
 	$ipaddress	= $_SESSION['ipaddress'];
 	$cidr 		= $_SESSION['cidr'];
 	$company 	= $_SESSION['company'];
+	$notes		= $_SESSION['notes'];
+	$provider	= $_SESSION['provider'];
 } //if ($op<>'') {
 
 ?>
@@ -35,6 +37,14 @@ if ($op=='') {
 		<tr>
 			<td>Company:&nbsp;</td>
 			<td><input type="text" name="company" id="company" length="50" <?php if (!empty($company)) { echo 'value='.$company; }?>></td>
+		</tr>
+		<tr>
+			<td>Notes:&nbsp;</td>
+			<td><input type="text" name="notes" id="notes" length="50" <?php if (!empty($notes)) { echo 'value='.$notes; }?>></td>
+		</tr>
+		<tr>
+			<td>Provider:&nbsp;</td>
+			<td><input type="text" name="provider" id="provider" length="50" <?php if (!empty($provider)) { echo 'value='.$provider; }?>></td>
 		</tr>
 		<tr>
 			<td><input type="submit" value="Submit"></td>
