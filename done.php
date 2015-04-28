@@ -22,6 +22,8 @@ if ($op=='') {
 	$total		= $_SESSION['total'];
 	$cidr 		= $_SESSION['cidr'];
 	$company 	= $_SESSION['company'];
+	$notes		= $_SESSION['notes'];
+	$provider	= $_SESSION['provider'];
 
 	//Trash the session since we no longer need it
 	session_destroy();
@@ -38,6 +40,8 @@ Broadcast: <b><?php echo $broadcast; ?></b><br>
 Total addresses: <b><?php echo $total; ?></b><br>
 CIDR: <b><?php echo $cidr; ?></b><br>
 Company: <b><?php echo $company; ?></b><br>
+Notes: <b><?php echo $notes; ?></b><br>
+Provider: <b><?php echo $provider; ?></b><br>
 <br>
 <br>
 <br>
