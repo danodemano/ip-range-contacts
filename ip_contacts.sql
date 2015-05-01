@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2015 at 08:20 AM
+-- Generation Time: May 01, 2015 at 09:38 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -56,7 +56,31 @@ CREATE TABLE IF NOT EXISTS `ip_ranges` (
   KEY `cidr` (`cidr`),
   KEY `ipv` (`ipv`),
   KEY `company` (`company`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ip_ranges_deleted`
+--
+
+CREATE TABLE IF NOT EXISTS `ip_ranges_deleted` (
+  `id` int(25) NOT NULL AUTO_INCREMENT,
+  `start` varchar(100) NOT NULL,
+  `end` varchar(100) NOT NULL,
+  `cidr` int(3) NOT NULL,
+  `ipv` int(1) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  `provider` varchar(255) NOT NULL,
+  `contacts` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `start` (`start`),
+  KEY `end` (`end`),
+  KEY `cidr` (`cidr`),
+  KEY `ipv` (`ipv`),
+  KEY `company` (`company`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
