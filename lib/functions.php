@@ -9,7 +9,7 @@ function all_blocks ($db) {
                 "<tr><td><b>ID</b></td><td><b>Network</b></td>".
                 "<td><b>Broadcast</b></td><td><b>CIDR</b></td>".
                 "<td><b>IP&nbsp;Version</b></td><td><b>Company</b></td>".
-				"<td><b>Notes</b></td><td><b>Provider</b></td></tr>\r\n";
+				        "<td><b>Notes</b></td><td><b>Provider</b></td></tr>\r\n";
   //Get all the records from the database
   foreach ($res as $records) {
     //Create each records row
@@ -32,8 +32,8 @@ function all_blocks ($db) {
     $return_val = $return_val . "<td>" . $records["cidr"] . "</td>\r\n";
     $return_val = $return_val . "<td>" . $records["ipv"] . "</td>\r\n";
     $return_val = $return_val . "<td>" . $records["company"] . "</td>\r\n";
-	$return_val = $return_val . "<td>" . $records["notes"] . "</td>\r\n";
-	$return_val = $return_val . "<td>" . $records["provider"] . "</td>\r\n";
+	  $return_val = $return_val . "<td>" . $records["notes"] . "</td>\r\n";
+	  $return_val = $return_val . "<td>" . $records["provider"] . "</td>\r\n";
     $return_val = $return_val . "</tr>\r\n";
   } //end foreach ($res as $records) {
 
@@ -61,8 +61,8 @@ function block_info($id, $db){
                     "<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
                     "<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
                     "<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n".
-					"<b>Notes:</b>&nbsp;" . $records['notes']  . "<br>\r\n".
-					"<b>Provider:</b>&nbsp;" . $records['provider']  . "<br>\r\n";
+					          "<b>Notes:</b>&nbsp;" . $records['notes']  . "<br>\r\n".
+					          "<b>Provider:</b>&nbsp;" . $records['provider']  . "<br>\r\n";
     }else if ($records["ipv"] == '6') {
       //Convert the network and broadcast back to human formats
       $network = new IPv6($records["start"]);
@@ -73,10 +73,21 @@ function block_info($id, $db){
                     "<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
                     "<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
                     "<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n".
-					"<b>Notes:</b>&nbsp;" . $records['notes']  . "<br>\r\n".
-					"<b>Provider:</b>&nbsp;" . $records['provider']  . "<br>\r\n";
+					          "<b>Notes:</b>&nbsp;" . $records['notes']  . "<br>\r\n".
+					          "<b>Provider:</b>&nbsp;" . $records['provider']  . "<br>\r\n";
     } //end if ($records["ipv"] == '4') {
   } //end foreach ($res as $records) {
   return $return_val;
 }
+
+//This function "deletes" an IP block by moving it to the deleted table
+function remove_block($id, $db) {
+  //Move the data to the deleted table
+  $query = "INSERT INTO `ip_ranges_deleted` SELECT * FROM `ip_ranges` WHERE `id` = ". $db->quote($id) ." LIMIT 1;";
+  $res = $db->query($query);
+
+  //Remove the data from the main table
+  $query = "DELETE FROM `ip_ranges` WHERE `id` = ". $db->quote($id) ." LIMIT 1;";
+  $res = $db->query($query);
+} //end function remove_block($id, $db) {
 ?>
