@@ -12,6 +12,9 @@ require_once('lib/functions.php');
 //Get the ID for the record
 $id = $_GET['id'];
 
+//For redirecting back regardless of filename
+$self = $_SERVER['PHP_SELF'];
+
 //Get the confirm variable
 @$confirm = $_GET['confirm'];
 
@@ -38,7 +41,7 @@ require_once('lib/dbclose.php');
 <h2>IP block details:</h2>
 <?php echo $record; ?>
 <br>
-<a href="delete.php?id=<?php echo $id;?>&confirm=true">Please click here to confirm you want to delete this record!</a><br><b>(This action CANNOT be undone)</b><br>
+<a href="$self?id=<?php echo $id;?>&confirm=true">Please click here to confirm you want to delete this record!</a><br><b>(This action CANNOT be undone)</b><br>
 <br>
 <br>
 <br>
