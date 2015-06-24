@@ -44,6 +44,108 @@ function all_blocks ($db) {
 	return $return_val;
 } //end function all_blocks ($db) {
 
+//This function is used to return blocks searched by IP address
+function search_ip_blocks ($ip_int, $db) {
+	//Search for the IP in the database
+	$query = "SELECT `id`, `start`, `end`, `cidr`, `ipv`, `company`, `notes`, `provider` FROM `ip_ranges` ".
+			 "WHERE ". $db->quote($ip_int) ." >= `start` AND ". $db->quote($ip_int) ." <= `end`;";
+	$res = $db->query($query);
+	
+	//Verify we have a result, return false if not
+	if ($res->rowCount() > 0) {	
+		//Table header row creation
+		$return_val = 	'<table border="1" cellpadding="5" cellspacing"10">'."\r\n".
+						"<tr><td><b>ID</b></td><td><b>Network</b></td>".
+						"<td><b>Broadcast</b></td><td><b>CIDR</b></td>".
+						"<td><b>IP&nbsp;Version</b></td><td><b>Company</b></td>".
+						"<td><b>Notes</b></td><td><b>Provider</b></td></tr>\r\n";
+		//Get all the records from the database
+		foreach ($res as $records) {
+			//Create each records row
+			$return_val = $return_val . "<tr>\r\n";
+			$return_val = $return_val . '<td><a href="ipshow.php?id=' . $records["id"] . '">' . $records["id"] . "</a></td>\r\n";
+			
+			//IPv4 and IPv6 have different functions, check and make the determination
+			if ($records["ipv"] == '4') {
+				//Convert the network and broadcast back to human formats
+				$network = new IPv4($records["start"]);
+				$broadcast = new IPv4($records["end"]);
+			} else if ($records["ipv"] == '6') {
+				//Convert the network and broadcast back to human formats
+				$network = new IPv6($records["start"]);
+				$broadcast = new IPv6($records["end"]);
+			} //end if ($records["ipv"] == '4') {
+				$return_val = $return_val . "<td>" . $network . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $broadcast . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["cidr"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["ipv"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["company"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["notes"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["provider"] . "</td>\r\n";
+				$return_val = $return_val . "</tr>\r\n";
+		} //end foreach ($res as $records) {
+
+		//Close out the table
+		$return_val = $return_val . "</table>";
+	}else{
+		$return_val = false;
+	} //end if ($res->rowCount() > 0) {	
+
+	//Return the data back to the calling function
+	return $return_val;
+} //end function search_blocks_ip ($db, $ip_int) {
+
+//This function searches the various other fields for a given term
+function search_for_term ($term, $db) {
+	//Search for the term in the company, notes, and provider fields
+	$query = "SELECT `id`, `start`, `end`, `cidr`, `ipv`, `company`, `notes`, `provider` FROM `ip_ranges` ".
+			 "WHERE `company` LIKE ". $db->quote('%'.$term.'%') ." OR `notes` LIKE ". $db->quote('%'.$term.'%') ." ".
+			 "OR `provider` LIKE ". $db->quote('%'.$term.'%') . ";";
+	$res = $db->query($query);
+	
+	//Verify we have a result, return false if not
+	if ($res->rowCount() > 0) {
+		//Table header row creation
+		$return_val = 	'<table border="1" cellpadding="5" cellspacing"10">'."\r\n".
+						"<tr><td><b>ID</b></td><td><b>Network</b></td>".
+						"<td><b>Broadcast</b></td><td><b>CIDR</b></td>".
+						"<td><b>IP&nbsp;Version</b></td><td><b>Company</b></td>".
+						"<td><b>Notes</b></td><td><b>Provider</b></td></tr>\r\n";
+		//Get all the records from the database
+		foreach ($res as $records) {
+			//Create each records row
+			$return_val = $return_val . "<tr>\r\n";
+			$return_val = $return_val . '<td><a href="ipshow.php?id=' . $records["id"] . '">' . $records["id"] . "</a></td>\r\n";
+			
+			//IPv4 and IPv6 have different functions, check and make the determination
+			if ($records["ipv"] == '4') {
+				//Convert the network and broadcast back to human formats
+				$network = new IPv4($records["start"]);
+				$broadcast = new IPv4($records["end"]);
+			} else if ($records["ipv"] == '6') {
+				//Convert the network and broadcast back to human formats
+				$network = new IPv6($records["start"]);
+				$broadcast = new IPv6($records["end"]);
+			} //end if ($records["ipv"] == '4') {
+				$return_val = $return_val . "<td>" . $network . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $broadcast . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["cidr"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["ipv"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["company"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["notes"] . "</td>\r\n";
+				$return_val = $return_val . "<td>" . $records["provider"] . "</td>\r\n";
+				$return_val = $return_val . "</tr>\r\n";
+		} //end foreach ($res as $records) {
+
+		//Close out the table
+		$return_val = $return_val . "</table>";
+	} else {
+		$return_val = false;
+	} //end if ($res->rowCount() > 0) {
+	
+	return $return_val;
+} //end function search_for_term ($term, $db) {
+
 //This function gets and formats the info for one block
 function block_info($id, $db){
 	//Search for the block by ID passed to this function
