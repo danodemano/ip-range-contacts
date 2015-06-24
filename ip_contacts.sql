@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2015 at 09:38 AM
+-- Generation Time: Jun 24, 2015 at 04:16 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -44,6 +44,8 @@ CREATE TABLE IF NOT EXISTS `ip_ranges` (
   `id` int(25) NOT NULL AUTO_INCREMENT,
   `start` varchar(100) NOT NULL,
   `end` varchar(100) NOT NULL,
+  `network` varchar(50) NOT NULL,
+  `broadcast` varchar(50) NOT NULL,
   `cidr` int(3) NOT NULL,
   `ipv` int(1) NOT NULL,
   `company` varchar(255) NOT NULL,
@@ -55,7 +57,11 @@ CREATE TABLE IF NOT EXISTS `ip_ranges` (
   UNIQUE KEY `end` (`end`),
   KEY `cidr` (`cidr`),
   KEY `ipv` (`ipv`),
-  KEY `company` (`company`)
+  KEY `company` (`company`),
+  KEY `network` (`network`),
+  KEY `broadcast` (`broadcast`),
+  KEY `provider` (`provider`),
+  KEY `notes` (`notes`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
@@ -68,6 +74,8 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_deleted` (
   `id` int(25) NOT NULL AUTO_INCREMENT,
   `start` varchar(100) NOT NULL,
   `end` varchar(100) NOT NULL,
+  `network` varchar(50) NOT NULL,
+  `broadcast` varchar(50) NOT NULL,
   `cidr` int(3) NOT NULL,
   `ipv` int(1) NOT NULL,
   `company` varchar(255) NOT NULL,
@@ -75,12 +83,16 @@ CREATE TABLE IF NOT EXISTS `ip_ranges_deleted` (
   `provider` varchar(255) NOT NULL,
   `contacts` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `start` (`start`),
-  KEY `end` (`end`),
   KEY `cidr` (`cidr`),
   KEY `ipv` (`ipv`),
-  KEY `company` (`company`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `company` (`company`),
+  KEY `start` (`start`),
+  KEY `end` (`end`),
+  KEY `network` (`network`),
+  KEY `broadcast` (`broadcast`),
+  KEY `provider` (`provider`),
+  KEY `notes` (`notes`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
