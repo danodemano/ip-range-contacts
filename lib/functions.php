@@ -22,15 +22,13 @@ function all_blocks ($db) {
 			//Convert the network and broadcast back to human formats
 			$network = new IPv4($records["start"]);
 			$broadcast = new IPv4($records["end"]);
-			$return_val = $return_val . "<td>" . $network . "</td>\r\n";
-			$return_val = $return_val . "<td>" . $broadcast . "</td>\r\n";
 		} else if ($records["ipv"] == '6') {
 			//Convert the network and broadcast back to human formats
 			$network = new IPv6($records["start"]);
 			$broadcast = new IPv6($records["end"]);
+		} //end if ($records["ipv"] == '4') {
 			$return_val = $return_val . "<td>" . $network . "</td>\r\n";
 			$return_val = $return_val . "<td>" . $broadcast . "</td>\r\n";
-		} //end if ($records["ipv"] == '4') {
 			$return_val = $return_val . "<td>" . $records["cidr"] . "</td>\r\n";
 			$return_val = $return_val . "<td>" . $records["ipv"] . "</td>\r\n";
 			$return_val = $return_val . "<td>" . $records["company"] . "</td>\r\n";
@@ -56,31 +54,22 @@ function block_info($id, $db){
 	if ($res->rowCount() > 0) {		
 		//There should only be one record, retrieve it
 		foreach ($res as $records) {
+			//Use the correct IP version when initilizing the class
 			if ($records["ipv"] == '4') {
-				//Convert the network and broadcast back to human formats
 				$network = new IPv4($records["start"]);
 				$broadcast = new IPv4($records["end"]);
-				$return_val = 	"<b>ID:</b>&nbsp;" . $records['id']  . "<br>\r\n".
-								"<b>Network:</b>&nbsp;" . $network  . "<br>\r\n".
-								"<b>Broadcast:</b>&nbsp;" . $broadcast  . "<br>\r\n".
-								"<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
-								"<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
-								"<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n".
-								"<b>Notes:</b>&nbsp;" . $records['notes']  . "<br>\r\n".
-								"<b>Provider:</b>&nbsp;" . $records['provider']  . "<br>\r\n";
 			}else if ($records["ipv"] == '6') {
-				//Convert the network and broadcast back to human formats
 				$network = new IPv6($records["start"]);
 				$broadcast = new IPv6($records["end"]);
-				$return_val = 	"<b>ID:</b>&nbsp;" . $records['id']  . "<br>\r\n".
-								"<b>Network:</b>&nbsp;" . $network  . "<br>\r\n".
-								"<b>Broadcast:</b>&nbsp;" . $broadcast  . "<br>\r\n".
-								"<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
-								"<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
-								"<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n".
-								"<b>Notes:</b>&nbsp;" . $records['notes']  . "<br>\r\n".
-								"<b>Provider:</b>&nbsp;" . $records['provider']  . "<br>\r\n";
 			} //end if ($records["ipv"] == '4') {
+			$return_val = 	"<b>ID:</b>&nbsp;" . $records['id']  . "<br>\r\n".
+							"<b>Network:</b>&nbsp;" . $network  . "<br>\r\n".
+							"<b>Broadcast:</b>&nbsp;" . $broadcast  . "<br>\r\n".
+							"<b>CIDR:</b>&nbsp;" . $records['cidr']  . "<br>\r\n".
+							"<b>IP&nbsp;Version:</b>&nbsp;" . $records['ipv']  . "<br>\r\n".
+							"<b>Company:</b>&nbsp;" . $records['company']  . "<br>\r\n".
+							"<b>Notes:</b>&nbsp;" . $records['notes']  . "<br>\r\n".
+							"<b>Provider:</b>&nbsp;" . $records['provider']  . "<br>\r\n";
 		} //end foreach ($res as $records) {
 	}else{
 		$return_val = false;
@@ -97,18 +86,25 @@ function block_details($id, $db) {
 	
 	//Verify we have a result, return false if not
 	if ($res->rowCount() > 0) {	
-		//Get the IP information from the query
-		$network = new IPv4($records["start"]);
-		$broadcast = new IPv4($records["end"]);
-		
-		//Load everything into the return array
-		$return_val['id'] 			= $records['id'];
-		$return_val['network'] 		= $network;
-		$return_val['broadcast'] 	= $broadcast;
-		$return_val['cidr'] 		= $records['cidr'];
-		$return_val['company'] 		= $records['company'];
-		$return_val['notes'] 		= $records['notes'];
-		$return_val['provider'] 	= $records['provider'];
+		foreach ($res as $records) {
+			//Use the correct IP version when initilizing the class
+			if ($records["ipv"] == '4') {
+				$network = new IPv4($records["start"]);
+				$broadcast = new IPv4($records["end"]);
+			}else if ($records["ipv"] == '6') {
+				$network = new IPv6($records["start"]);
+				$broadcast = new IPv6($records["end"]);
+			} //end if ($records["ipv"] == '4') {
+			
+			//Load everything into the return array
+			$return_val['id'] 			= $records['id'];
+			$return_val['network'] 		= $network;
+			$return_val['broadcast'] 	= $broadcast;
+			$return_val['cidr'] 		= $records['cidr'];
+			$return_val['company'] 		= $records['company'];
+			$return_val['notes'] 		= $records['notes'];
+			$return_val['provider'] 	= $records['provider'];
+		} //end foreach ($res as $records) {
 	}else{
 		$return_val = false;
 	} //end if ($res->rowCount() > 0) {	
