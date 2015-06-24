@@ -21,8 +21,13 @@ require_once('lib/dbclose.php');
 <html>
 <head>
 <title>IP Address Contacts - Details</title>
+<link rel=stylesheet type="text/css" href="style.css">
 </head>
 <body>
+<?php
+if ($record <> false) {
+//Valid ID - continue to display the information
+?>
 <h2>IP block details:</h2>
 <?php echo $record; ?>
 <br>
@@ -30,6 +35,17 @@ require_once('lib/dbclose.php');
 <br>
 <br>
 <br>
+<?php
+}else{
+//No record found, display an error
+?>
+<h2><p class="error">IP BLOCK NOT FOUND!</p></h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+<?php }// end if ($record <> false) { ?>
 <a href="index.php">Return to the main page</a>
 </body>
 </html>
