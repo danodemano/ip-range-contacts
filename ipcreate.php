@@ -21,6 +21,7 @@ if ($op=='') {
 <html>
 <head>
 <title>IP Address Contacts - Create Network</title>
+<link rel=stylesheet type="text/css" href="style.css">
 </head>
 <body>
 <h2>Use this form to enter in a new IP range and company</h2>
