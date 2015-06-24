@@ -31,9 +31,10 @@ if ($op=='') {
 <html>
 <head>
 <title>IP Address Contacts - Network Created!</title>
+<link rel=stylesheet type="text/css" href="style.css">
 </head>
 <body>
-<font color="green"><b>The IP block has been created!</b></font><br><br>
+<P class="success">The IP block has been created!</p>
 Details follow:<br><br>
 Network: <b><?php echo $network; ?></b><br>
 Broadcast: <b><?php echo $broadcast; ?></b><br>
@@ -56,7 +57,7 @@ Please <a href="index.php">click here</a> to return to the home page.
 <title>IP Address Contacts - Network Deleted!</title>
 </head>
 <body>
-<font color="green"><b>The IP block has been Deleted!</b></font><br><br>
+<P class="success">The IP block has been Deleted!</p>
 <br>
 <br>
 <br>
