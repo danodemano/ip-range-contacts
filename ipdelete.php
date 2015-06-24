@@ -41,7 +41,7 @@ require_once('lib/dbclose.php');
 <h2>IP block details:</h2>
 <?php echo $record; ?>
 <br>
-<a href="$self?id=<?php echo $id;?>&confirm=true">Please click here to confirm you want to delete this record!</a><br><b>(This action CANNOT be undone)</b><br>
+<a href="<?php echo $self;?>?id=<?php echo $id;?>&confirm=true">Please click here to confirm you want to delete this record!</a><br><b>(This action CANNOT be undone)</b><br>
 <br>
 <br>
 <br>
