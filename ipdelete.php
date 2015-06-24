@@ -36,6 +36,7 @@ require_once('lib/dbclose.php');
 <html>
 <head>
 <title>IP Address Contacts - Details</title>
+<link rel=stylesheet type="text/css" href="style.css">
 </head>
 <body>
 <h2>IP block details:</h2>
