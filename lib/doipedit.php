@@ -37,7 +37,7 @@ if (empty($company)) {
 
 	//Something is not right, redirect back to the create page
 	require_once('dbclose.php');
-	header('Location: ../ipedit.php?op=invalidcompany');
+	header("Location: ../ipedit.php?id=$id&op=invalidcompany");
 	exit;
 } //end if (empty($company)) {
 
@@ -61,4 +61,3 @@ $_SESSION['provider'] 	= $provider;
 header('Location: ../done.php?op=ipedited');
 exit;
 ?>
-
