@@ -13,6 +13,7 @@ require_once('lib/functions.php');
 <html>
 <head>
 <title>IP Address Contacts - Home</title>
+<link rel=stylesheet type="text/css" href="style.css">
 </head>
 <body>
 <h2>Navigation Links:</h2>
