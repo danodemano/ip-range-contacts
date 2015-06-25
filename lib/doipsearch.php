@@ -40,6 +40,7 @@ if ($validipv4) {
 	if ($results <> false) {
 		//Redirect back with the results and close the DB
 		$_SESSION['results'] = $results;
+		$_SESSION['term'] = $term;
 		require_once('dbclose.php');
 		header('Location: ../results.php?op=done');
 		exit;
@@ -59,6 +60,7 @@ if ($validipv4) {
 	if ($results <> false) {
 		//Redirect back with the results and close the DB
 		$_SESSION['results'] = $results;
+		$_SESSION['term'] = $term;
 		require_once('dbclose.php');
 		header('Location: ../results.php?op=done');
 		exit;
@@ -73,6 +75,7 @@ if ($validipv4) {
 	if ($results <> false) {
 		//Redirect back with the results and close the DB
 		$_SESSION['results'] = $results;
+		$_SESSION['term'] = $term;
 		require_once('dbclose.php');
 		header('Location: ../results.php?op=done');
 	} else {
