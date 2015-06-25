@@ -29,11 +29,14 @@ if ($op == 'blank') {
 } else {
 //Get the IP blocks from the session data
 $results = $_SESSION['results'];
+$term = $_SESSION['term'];
 
 //Destroy the session
 session_destroy();
 
 echo $results;
+echo "<br>";
+echo "You searched for: $term";
 } //end if ($op == 'blank') {
 ?>
 <br>
