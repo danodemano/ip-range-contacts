@@ -26,6 +26,9 @@ if ($op == 'blank') {
 ?>
 <p class="error">No results were found, please try again!</p>
 <?php
+$term = $_SESSION['term'];
+echo "<br>";
+echo "You searched for: $term";
 } else {
 //Get the IP blocks from the session data
 $results = $_SESSION['results'];
