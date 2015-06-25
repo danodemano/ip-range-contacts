@@ -83,15 +83,15 @@ if ($op == 'invalidcompany') {
 		?>
 		<tr>
 			<td>Company:&nbsp;</td>
-			<td><input type="text" name="company" id="company" length="50" <?php if (!empty($company)) { echo 'value='.$company; }?>></td>
+			<td><input type="text" name="company" id="company" length="50" <?php if (!empty($company)) { echo 'value="'.$company . '"'; }?>></td>
 		</tr>
 		<tr>
 			<td>Notes:&nbsp;</td>
-			<td><input type="text" name="notes" id="notes" length="50" <?php if (!empty($notes)) { echo 'value='.$notes; }?>></td>
+			<td><input type="text" name="notes" id="notes" length="50" <?php if (!empty($notes)) { echo 'value="'.$notes . '"'; }?>></td>
 		</tr>
 		<tr>
 			<td>Provider:&nbsp;</td>
-			<td><input type="text" name="provider" id="provider" length="50" <?php if (!empty($provider)) { echo 'value='.$provider; }?>></td>
+			<td><input type="text" name="provider" id="provider" length="50" <?php if (!empty($provider)) { echo 'value="'.$provider . '"'; }?>></td>
 		</tr>
 		<?php } //end <?php if ($op=='') { ?>
 		<tr>
