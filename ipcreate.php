@@ -25,6 +25,17 @@ if ($op=='') {
 </head>
 <body>
 <h2>Use this form to enter in a new IP range and company</h2>
+<?php
+if ($op == 'invalidcidr') {
+	echo '<p class="error">The CIDR entered is not valid, please correct it and try again</p>';
+} else if ($op == 'invalidcompany') {
+	echo '<p class="error">You did not enter a valid company, please correct it and try again</p>';
+} else if ($op == 'dupeip') {
+	echo '<p class="error">The IP range specified overlaps with an existing range or already exists!</p>';
+} else if ($op == 'invalidip') {
+	echo '<p class="error">You did not enter a valid IP address, please correct it and try again</p>';
+} //end if ($op == 'invalidcidr') {
+?>
 <form method="post" action='lib/doipcreate.php'>
 	<table>
 		<tr>
