@@ -27,6 +27,8 @@ if ($op == 'blank') {
 <p class="error">No results were found, please try again!</p>
 <?php
 $term = $_SESSION['term'];
+//Destroy the session
+session_destroy();
 echo "<br>";
 echo "You searched for: $term";
 } else {
