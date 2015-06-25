@@ -80,6 +80,7 @@ if ($validipv4) {
 		header('Location: ../results.php?op=done');
 	} else {
 		//No results, close the DB and redirect back with an error
+		$_SESSION['term'] = $term;
 		require_once('dbclose.php');
 		header('Location: ../results.php?op=notfound');
 		exit;
