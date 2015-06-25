@@ -49,6 +49,11 @@ if ($record <> false) {
 ?>
 <h2>Use this form to edit the company/notes/provider for an IP block</h2>
 <p class="error">(NOTE: You cannot edit the network and CIDR.  If these need changed you will have to delete then recreate the network!)</p>
+<?php
+if ($op == 'invalidcompany') {
+	echo '<p class="error">You did not enter a valid company, please correct it and try again</p>';
+} //end if ($op == 'invalidcompany') {
+?>
 <form method="post" action='lib/doipedit.php?id=<?php echo $id;?>'>
 	<table>
 		<tr>
