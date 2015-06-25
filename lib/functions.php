@@ -99,7 +99,8 @@ function search_ip_blocks ($ip_int, $db) {
 function search_for_term ($term, $db) {
 	//Search for the term in the company, notes, and provider fields
 	$query = "SELECT `id`, `start`, `end`, `cidr`, `ipv`, `company`, `notes`, `provider` FROM `ip_ranges` ".
-			 "WHERE `company` LIKE ". $db->quote('%'.$term.'%') ." OR `notes` LIKE ". $db->quote('%'.$term.'%') ." ".
+			 "WHERE `network` LIKE ". $db->quote('%'.$term.'%') . " OR `broadcast` LIKE ". $db->quote('%'.$term.'%') ." ".
+			 "OR `company` LIKE ". $db->quote('%'.$term.'%') ." OR `notes` LIKE ". $db->quote('%'.$term.'%') ." ".
 			 "OR `provider` LIKE ". $db->quote('%'.$term.'%') . ";";
 	$res = $db->query($query);
 	
