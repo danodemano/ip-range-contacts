@@ -40,23 +40,23 @@ if ($op == 'invalidcidr') {
 	<table>
 		<tr>
 			<td>IP&nbsp;Address:&nbsp;</td>
-			<td><input type="text" name="ip" id="ip" length="50" <?php if (!empty($ipaddress)) { echo 'value='.$ipaddress; }?>></td>
+			<td><input type="text" name="ip" id="ip" length="50" <?php if (!empty($ipaddress)) { echo 'value="'.$ipaddress . '"'; }?>></td>
 		</tr>
 		<tr>
 			<td>CIDR:&nbsp;</td>
-			<td><input type="text" name="cidr" id="cidr" length="50" <?php if (!empty($cidr)) { echo 'value='.$cidr; }?>></td>
+			<td><input type="text" name="cidr" id="cidr" length="50" <?php if (!empty($cidr)) { echo 'value="'.$cidr . '"'; }?>></td>
 		</tr>
 		<tr>
 			<td>Company:&nbsp;</td>
-			<td><input type="text" name="company" id="company" length="50" <?php if (!empty($company)) { echo 'value='.$company; }?>></td>
+			<td><input type="text" name="company" id="company" length="50" <?php if (!empty($company)) { echo 'value="'.$company . '"'; }?>></td>
 		</tr>
 		<tr>
 			<td>Notes:&nbsp;</td>
-			<td><input type="text" name="notes" id="notes" length="50" <?php if (!empty($notes)) { echo 'value='.$notes; }?>></td>
+			<td><input type="text" name="notes" id="notes" length="50" <?php if (!empty($notes)) { echo 'value="'.$notes . '"'; }?>></td>
 		</tr>
 		<tr>
 			<td>Provider:&nbsp;</td>
-			<td><input type="text" name="provider" id="provider" length="50" <?php if (!empty($provider)) { echo 'value='.$provider; }?>></td>
+			<td><input type="text" name="provider" id="provider" length="50" <?php if (!empty($provider)) { echo 'value="'.$provider . '"'; }?>></td>
 		</tr>
 		<tr>
 			<td><input type="submit" value="Submit"></td>
